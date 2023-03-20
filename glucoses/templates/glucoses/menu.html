@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="list-group">
+        <a href="{% url 'glucoses:list' %}" class="list-group-item list-group-item-action">My measurements</a>
+        <a href="{% url 'glucoses:add' %}" class="list-group-item list-group-item-action">Add new measurement</a>
+    </div>
+
+{% endblock %}

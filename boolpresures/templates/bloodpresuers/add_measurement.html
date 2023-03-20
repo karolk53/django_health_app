@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block title %} <title>Dodaj nowy pomiar</title> {% endblock %}
+
+{% block content %}
+    {% csrf_token %}
+    <div class="container">
+        <h3>Add new bloodpressure measurement</h3>
+        <form id="form-container" method="post" action="." enctype="multipart/form-data">
+            {% crispy form form.helper %}
+        </form>
+    </div>
+{% endblock %}
+
+{% block additional_scripts %}
+    <script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
+    {{ form.media }}
+{% endblock %}

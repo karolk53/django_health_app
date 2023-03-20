@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static "bloodpresures/css/style.css" %}">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h3>My measurements</h3>
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Measurement</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Interpretation</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for measurement in measurements %}
+                    <tr>
+                        <td>{{ measurement.systolic }}/{{ measurement.diastolic }}</td>
+                        <td>{{ measurement.examination_date }}</td>
+                        {% if measurement.systolic < 130 %}
+                            <td style = "color: green; font-weight: bold">OK</td>
+                        {% elif measurement.systolic < 140 %}
+                            <td style = "color: yellow; font-weight: bold">NORMAL</td>
+                        {% elif measurement.systolic > 150 %}
+                            <td style = "color: darkred; font-weight: bold">HIGH</td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <nav aria-label="...">
+          <ul class="pagination">
+              {% if measurements.has_previous %}
+                  <li class="page-item"><a class="page-link" href="?page={{ measurements.previous_page_number }}" >Previous</a></li>
+                  <li class="page-item"><a class="page-link" href="?page={{ measurements.previous_page_number }}">{{ measurements.previous_page_number }}</a></li>
+              {% endif %}
+              <li class="page-item active"><a class="page-link" href="#">{{ measurements.number }} <span class="sr-only"></span></a></li>
+              {% if measurements.has_next %}
+                  <li class="page-item"><a class="page-link" href="?page={{ measurements.next_page_number }}">{{ measurements.next_page_number }}</a></li>
+                  <li class="page-item"><a class="page-link" href="?page={{ measurements.next_page_number }}">Next</a></li>
+              {% endif %}
+          </ul>
+        </nav>
+    </div>
+{% endblock %}
